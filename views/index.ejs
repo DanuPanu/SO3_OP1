@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <style>
+        h1 {
+            font-size: 24pt;
+            margin-left: 40pt;
+        }
+
+        table{
+            margin-left: 40pt;
+        }
+        .mdl-textfield{
+            border-radius: 5px;
+            padding: 5px;
+            border: 1px solid black;
+            margin-left: 40pt;
+        }
+        .mdl-button{
+            margin: 10pt;
+            margin-left: 10t;
+        }
+    </style>
+    <title>Tehtävä1</title>
+</head>
+<body>
+
+    <h1>Tehtävä 1: Kuntadataa</h1>
+
+    <form method="POST" action="/">
+
+        <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" name="teksti" placeholder="Etsi kunnan nimellä">
+        </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Hae</button>
+    </form>
+
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+
+        <tr>
+            <th class="mdl-data-table__cell--non-numeric">Kunnan nimi</th>
+            <th class="mdl-data-table__cell--non-numeric">Asukasmäärä yhteensä</th>
+            <th class="mdl-data-table__cell--non-numeric">Miesten asukasmäärä</th>
+            <th class="mdl-data-table__cell--non-numeric">Naisten asukasmäärä</th>
+        </tr>
+
+        <%let maara = 0 %>
+        <%let keskiarvo = 0 %>
+        <%let naiset = 0 %>
+        <%let miehet = 0 %>
+
+    <% kunnat.forEach((kunta) => { %>
+
+        <% maara = maara + 1 %>
+        <% keskiarvo = keskiarvo + kunta.asukkaatYhteensa%>
+        <% naiset = naiset + kunta.asukkaatNaiset%>
+        <% miehet = miehet + kunta.asukkaatMiehet%>
+        <tr>
+            <td class="mdl-data-table__cell--non-numeric"><%= kunta.kunta %></td>
+            <td class="mdl-data-table__cell--non-numeric"><%= kunta.asukkaatYhteensa.toLocaleString('fi-FI') %></td>
+            <td class="mdl-data-table__cell--non-numeric"><%= kunta.asukkaatMiehet.toLocaleString('fi-FI') %></td>
+            <td class="mdl-data-table__cell--non-numeric"><%= kunta.asukkaatNaiset.toLocaleString('fi-FI') %></td>
+        </tr>
+    <% }) %>
+
+    <%let yhteensa = naiset + miehet %>
+
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric">Kuntien määrä</td>
+        <td class="mdl-data-table__cell--non-numeric">Kuntien asukasluvun keskiarvo</td>
+        <td class="mdl-data-table__cell--non-numeric">Naisten % osuus väestöstä</td>
+    </tr>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric"><%= maara%></td>
+        <td class="mdl-data-table__cell--non-numeric"><%= (keskiarvo/maara).toLocaleString('fi-FI')%></td>
+        <td class="mdl-data-table__cell--non-numeric"><%= (naiset/yhteensa*100).toLocaleString('fi-FI')%></td>
+    </tr>
+
+    </table>
+
+</body>
+</html>
